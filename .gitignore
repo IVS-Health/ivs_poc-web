@@ -1,0 +1,10 @@
+# Local environment files
+.env
+
+# Node dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/

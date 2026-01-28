@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { emergencyCaseService } from "../api/services/emergencyCaseService";
 
-export default function emergencyRegisterForm() {
+type Props = {
+  onCaseRegistered: () => Promise<void>;
+};
+
+export default function emergencyRegisterForm({ onCaseRegistered }: Props) {
   const [location, setLocation] = useState<string>("");
   const [callBackNumber, setCallBackNumber] = useState<string>("");
   const [natureOfEmergency, setNatureOfEmergency] = useState<string>("");
@@ -22,7 +26,7 @@ export default function emergencyRegisterForm() {
       setCallBackNumber("");
       setNatureOfEmergency("");
       setPatientCondition("");
-      //   setOpenRegisterDialogBox(false);
+      onCaseRegistered();
     } catch (error) {
       console.error("Error registering new case:", error);
       window.alert("Failed to register case");
@@ -30,44 +34,78 @@ export default function emergencyRegisterForm() {
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           registerNewCase();
         }}
+        className="bg-white shadow-lg rounded-2xl p-8 w-full space-y-6 w-[500px]"
       >
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2"
-        />
-        <input
-          type="text"
-          placeholder="Call Back Number"
-          value={callBackNumber}
-          onChange={(e) => setCallBackNumber(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2"
-        />
-        <input
-          type="text"
-          placeholder="Nature Of Emergency"
-          value={natureOfEmergency}
-          onChange={(e) => setNatureOfEmergency(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2"
-        />
-        <input
-          type="text"
-          placeholder="patient Condition"
-          value={patientCondition}
-          onChange={(e) => setPatientCondition(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2"
-        />
+        <h3 className="text-2xl font-semibold text-center text-gray-800">
+          Emergency Case Registration
+        </h3>
+
+        {/* Location */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Location
+          </label>
+          <input
+            type="text"
+            placeholder="Enter location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+          />
+        </div>
+
+        {/* Call Back Number */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Call Back Number
+          </label>
+          <input
+            type="text"
+            placeholder="Enter phone number"
+            value={callBackNumber}
+            onChange={(e) => setCallBackNumber(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+          />
+        </div>
+
+        {/* Nature of Emergency */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Nature of Emergency
+          </label>
+          <input
+            type="text"
+            placeholder="Describe the emergency"
+            value={natureOfEmergency}
+            onChange={(e) => setNatureOfEmergency(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+          />
+        </div>
+
+        {/* Patient Condition */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Patient Condition
+          </label>
+          <input
+            type="text"
+            placeholder="Describe patient condition"
+            value={patientCondition}
+            onChange={(e) => setPatientCondition(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+          />
+        </div>
+
+        {/* Submit Button */}
         <button
           type="submit"
-          className="px-6 py-3 rounded-2xl font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-indigo-600 text-white hover:bg-indigo-700 transition"
+          className="w-full bg-indigo-600 text-white font-medium py-3 rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Submit
         </button>
